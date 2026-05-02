@@ -1,0 +1,12 @@
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Data Sensitif / API Keys
+*.json
+
+# Data Excel (jika tidak ingin di-push)
+*.xlsx
+
+# File gambar hasil testing
+img.jpg
