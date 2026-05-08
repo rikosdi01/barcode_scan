@@ -7,56 +7,57 @@
 </p>
 
 ## 📝 Project Overview
-Sistem manajemen inventaris mandiri yang dikembangkan untuk mendigitalisasi pencatatan stok secara *real-time*. Aplikasi ini mengintegrasikan pengenalan gambar (Computer Vision) dengan database berbasis cloud menggunakan Google Sheets API. Sistem ini dirancang untuk efisiensi operasional dengan logika otomatisasi yang mencegah duplikasi data.
+A standalone inventory management system developed to digitalize stock recording in real-time. This application integrates **Computer Vision** for barcode recognition with a cloud-based database using the **Google Sheets API**. It is designed for operational efficiency, featuring automation logic to prevent data duplication and streamline stock entry.
 
 ---
 
 ## 🛠️ Technical Stack
 * **Core Language:** Python 3.12
-* **Computer Vision:** `OpenCV` & `ZXing-CPP`
-* **Cloud Integration:** `GSpread` (Google Sheets API)
+* **Computer Vision:** `OpenCV` & `ZXing-CPP` (High-stability 1D/2D detection)
+* **Cloud Integration:** `GSpread` (Google Sheets API) & `OAuth2Client`
 * **Interface:** `Tkinter` (GUI Framework)
+* **Utility:** `Python-Barcode` (Standard Code128 generation)
 
 ---
 
 ## 🚀 Step-by-Step Workflow
 
-### 1. Generate Barcode Identitas Barang
-Langkah pertama adalah membuat barcode untuk barang baru. Pengguna cukup memasukkan ID atau Nama Barang, dan sistem akan menghasilkan barcode standar Code128.
+### 1. Generate Asset Barcodes
+The first step is creating barcodes for new items. Users enter the Unique ID or Item Name, and the system generates a standard **Code128** barcode.
 
 <table border="0">
   <tr>
-    <td width="50%"><img src="assets/generator_barcode.png" alt="Generator UI"/><br/><sub><b>UI Generator:</b> Input ID unik barang.</sub></td>
-    <td width="50%"><img src="assets/barcode_saved.png" alt="Barcode Saved"/><br/><sub><b>Output:</b> Barcode disimpan otomatis di folder <code>/barcode</code>.</sub></td>
+    <td width="50%"><img src="assets/generator_barcode.png" alt="Generator UI"/><br/><sub><b>Generator UI:</b> Input unique item ID.</sub></td>
+    <td width="50%"><img src="barcode/barcode_1001.png" alt="Barcode Saved"/><br/><sub><b>Output:</b> Barcodes are automatically saved in the <code>/barcode</code> folder.</sub></td>
   </tr>
 </table>
 
-### 2. Persiapan Database Cloud (Google Sheets)
-Sistem menggunakan Google Sheets sebagai database. Baris pertama (Header) harus disiapkan agar data tersinkronisasi dengan kolom yang benar.
+### 2. Cloud Database Setup (Google Sheets)
+The system utilizes Google Sheets as a lightweight cloud database. The header row must be configured to ensure data synchronizes with the correct columns.
 
 <p align="center">
   <img src="assets/sheet_header.png" width="600" alt="Spreadsheet Header"/><br/>
-  <sub><b>Struktur Kolom:</b> Barcode, Last Update, Item Name, dan Quantity.</sub>
+  <sub><b>Column Structure:</b> Barcode Value, Last Update, Item Name, and Quantity.</sub>
 </p>
 
-### 3. Proses Scanning & Deteksi Pintar
-Pengguna memilih gambar barcode yang ingin di-scan. Sistem menggunakan engine **ZXing** untuk membaca data dari gambar secara akurat.
+### 3. Smart Scanning & Recognition
+Users select a barcode image to scan. The system employs the **ZXing** engine to accurately extract data from the image.
 
 <table border="0">
   <tr>
-    <td width="50%"><img src="assets/barcode_scan.png" alt="Scanner UI"/><br/><sub><b>Scan Process:</b> Memilih file gambar barcode.</sub></td>
-    <td width="50%"><img src="assets/barcode_detected.png" alt="Detection Success"/><br/><sub><b>Detection:</b> Barcode terdeteksi dan sistem mengecek database.</sub></td>
+    <td width="50%"><img src="assets/barcode_scan.png" alt="Scanner UI"/><br/><sub><b>Scan Process:</b> Uploading the barcode image file.</sub></td>
+    <td width="50%"><img src="assets/barcode_detected.png" alt="Detection Success"/><br/><sub><b>Detection:</b> Barcode recognized; system verifies data against the cloud database.</sub></td>
   </tr>
 </table>
 
-### 4. Sinkronisasi & Update Stok Otomatis
-Setelah barcode terdeteksi, sistem menjalankan logika:
-- **Jika Barang Baru:** Menambah baris baru ke Google Sheets.
-- **Jika Barang Lama:** Menambah jumlah Qty (+1) pada baris yang sama.
+### 4. Automated Inventory Sync
+Once detected, the system executes the following logic:
+- **New Entry:** Appends a new row to Google Sheets if the barcode is unregistered.
+- **Existing Item:** Automatically increments the **Quantity (Qty)** by +1 on the corresponding row.
 
 <p align="center">
   <img src="assets/barcode_scanned.png" width="500" alt="Final Sync"/><br/>
-  <sub><b>Final Result:</b> Konfirmasi sukses setelah data terkirim ke Cloud.</sub>
+  <sub><b>Final Result:</b> Success confirmation after cloud data synchronization.</sub>
 </p>
 
 ---
@@ -64,10 +65,10 @@ Setelah barcode terdeteksi, sistem menjalankan logika:
 ## ⚙️ Implementation Steps
 
 ### 1. Google Cloud Configuration
-1. Buka [Google Cloud Console](https://console.cloud.google.com/).
-2. Aktifkan **Google Sheets API** dan **Google Drive API**.
-3. Buat **Service Account**, unduh Key dalam format **JSON**, dan simpan sebagai `credentials.json`.
-4. Share Google Sheets Anda ke email Service Account tersebut sebagai **Editor**.
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
+2. Enable **Google Sheets API** and **Google Drive API**.
+3. Create a **Service Account**, download the **JSON Key**, and save it as `credentials.json`.
+4. Share your Google Sheet with the Service Account email as an **Editor**.
 
 ### 2. Installation
 ```bash
