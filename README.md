@@ -1,12 +1,12 @@
 # 📦 Cloud-Integrated Barcode Inventory System
 
 <p align="left">
-  <img src="/assets/generator_barcode" />
-  <img src="/assets/barcode_saved" />
-  <img src="/assets/sheet_header" />
-  <img src="/assets/barcode_scan" />
-  <img src="/assets/barcode_detected" />
-  <img src="/assets/barcode_scanned" />
+  <img src="/assets/generator_barcode.png" />
+  <img src="/assets/barcode_saved.png" />
+  <img src="/assets/sheet_header.png" />
+  <img src="/assets/barcode_scan.png" />
+  <img src="/assets/barcode_detected.png" />
+  <img src="/assets/barcode_scanned.png" />
 </p>
 
 ## 📝 Project Overview
